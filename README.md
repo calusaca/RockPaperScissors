@@ -1,70 +1,67 @@
-# Getting Started with Create React App
+# Implementation Logic
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+The logic implemented to solve the problem is as following:
+* Each player will choose a secret key
+* Each player will select the desire play (ROCK, PAPER or SCISSORS)
+When the player send the selection what is really sent to the contract is the hash between the SecretKey + Selection.
+This will make sure that for each player the actual selection will be recorded but it is not saved in plain text, so the other player cannot know in advance the selection of the player that played first.
 
-## Available Scripts
+After both players send their selection, the system will request for each player to send their SecretKey.
 
-In the project directory, you can run:
+With the secret key, the contract will try to figure out which was the selection by each player, this is done by finding out the hash as follows:
+Rock
+Hash(SecretKey+1)
+Paper
+Hash(SecretKey+1)
+Scissors
+Hash(SecretKey+1)
 
-### `yarn start`
+So if any of this hash matches the hash that was previously saved then the found moved will be assigned to the player.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Once we discover each player selection then we can calculate the actual result based on each player selection.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+# Test Coverage
 
-### `yarn test`
+The following tests cases were implemented:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+* Initial values after deployment
+* Reset variables to start a new game
+* Verify that hash values send by each player is recorded on the smart contract
+* Prevent same wallet to be both players
+* Record the selected play by each user after each user send the secret key
+* Calculate winner after each user send selection and secret key
 
-### `yarn build`
+# Environment Setup
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+* Install dependencies by running the following command 
+    * yarn add ethers hardhat @nomiclabs/hardhat-waffle ethereum-waffle chai @nomiclabs/hardhat-ethers 
+* Instruction to execute the program:
+    * Run the hardhat node with the following command (keep it running)
+        * npx hardhat node
+    * Compile the contract to generate the necessary artifacts, by executing the following command:    
+        * npx hardhat compile
+    * Deploy the contract in the running hardhat node with the following command:
+        * npx hardhat run scripts/deploy.js --network localhost
+    * Modify the react project to point to the deployed contract
+        * copy the address generated when deployed the contract, search for something like this:
+            * RPS deployed to: 0xf4B146FbA71F41E0592668ffbF264F1D186b2Ca8, copy the address
+        * open file src/App.js
+            * Search for this "const rpsAddress = '0xf4B146FbA71F41E0592668ffbF264F1D186b2Ca8';" (should be line 9)
+            * Replace the address with the generated address after deploy.
+    * Execute the react app with the following command (Keep it running)
+        * npm start 
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+# Using the app
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+* Import into metamask at least 2 wallets from the list of wallets when the harhat node was executed.
+* Switch metamask to localhost network
+* Switch wallet to one of the wallet imported
+* With the current wallet select ROCK/PAPER/SCISSORS
+* Enter a secret key, it can be anything
+* Click on play and accept the transaction on Metamask.
+* Switch to the second imported wallet on metamask and repeat steps to select play.
+* After second player made the play, each wallet will be requested to reveal the secret key (which has to be the same entered before)
+* After both players revealead the secret key the app will show the result that was calculated by the contract.
 
-### `yarn eject`
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
