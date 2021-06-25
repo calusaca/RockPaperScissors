@@ -31,6 +31,11 @@ The following tests cases were implemented:
 * Record the selected play by each user after each user send the secret key
 * Calculate winner after each user send selection and secret key
 
+## Test execution
+
+Execute the following command to run the tests:
+npx hardhat test    
+
 # Environment Setup
 
 * Install dependencies by running the following command 
