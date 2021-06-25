@@ -12,9 +12,9 @@ With the secret key, the contract will try to figure out which was the selection
 Rock
 Hash(SecretKey+1)
 Paper
-Hash(SecretKey+1)
+Hash(SecretKey+2)
 Scissors
-Hash(SecretKey+1)
+Hash(SecretKey+3)
 
 So if any of this hash matches the hash that was previously saved then the found moved will be assigned to the player.
 
