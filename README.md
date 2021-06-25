@@ -16,7 +16,7 @@ Hash(SecretKey+2)
 Scissors
 Hash(SecretKey+3)
 
-So if any of this hash matches the hash that was previously saved then the found moved will be assigned to the player.
+So if any of this hashes matches the hash that was previously saved then this will be the "Play Selection" assigned to the player.
 
 Once we discover each player selection then we can calculate the actual result based on each player selection.
 
