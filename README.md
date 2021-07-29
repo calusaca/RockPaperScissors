@@ -47,6 +47,11 @@ npx hardhat test
         * npx hardhat compile
     * Deploy the contract in the running hardhat node with the following command:
         * npx hardhat run scripts/deploy.js --network localhost
+    * Upgrade the contract to version 2:
+        * Go to file scripts/upgrade_RPS.v2.js and update line 19
+            * const rpsv2 = await upgrades.upgradeProxy('0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0', RPSV2);
+            * Change the current address for the address that was generated in the previous step
+        * npx hardhat run scripts/upgrade_RPS.v2.js --network localhost
     * Modify the react project to point to the deployed contract
         * copy the address generated when deployed the contract, search for something like this:
             * RPS deployed to: 0xf4B146FbA71F41E0592668ffbF264F1D186b2Ca8, copy the address
