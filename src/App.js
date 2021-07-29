@@ -6,7 +6,7 @@ import RPS from './artifacts/contracts/RockPaperScissors.sol/RockPaperScissors.j
 
 import { useEffect } from 'react';
 
-const rpsAddress = '0xf4B146FbA71F41E0592668ffbF264F1D186b2Ca8';
+const rpsAddress = '0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0';
 
 
 

@@ -8,7 +8,7 @@ import "hardhat/console.sol";
 
 
 
-contract RockPaperScissors is Initializable {
+contract RockPaperScissorV2 is Initializable {
 
     enum PlayerChoice {WAITING, ROCK, PAPER, SCISSORS}
     
@@ -133,4 +133,22 @@ contract RockPaperScissors is Initializable {
             revert("Secrete Phrase or Player Selection error");
         }
     }
+
+    function getGameStatusString() external view returns (string memory){
+        if (game.status == GameStatus.WAITING_PLAYERS){
+            return "Waiting for Both Players Play";
+        } else if(game.status == GameStatus.WAITING_PLAYER2) {
+            return "Waiting for Second Player to Play";
+        } else if(game.status == GameStatus.READY_FOR_CALCULATE) {
+            return "Ready to calculate winner, waiting for confirmation from players";
+        } else if(game.status == GameStatus.WAITING_CONFIRMATION_PLAYER2) {
+            return "Ready for Calculate winner, waiting for second player confirmation";
+        } else if(game.status == GameStatus.WINNER_PLAYER1) {
+            return "Player 1 win the game";
+        } else if(game.status == GameStatus.WINNER_PLAYER2) {
+            return "Player 2 win the game";
+        } else {
+            return "Game result in draw";
+        } 
+    } 
 }

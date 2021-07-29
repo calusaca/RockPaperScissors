@@ -14,11 +14,11 @@ async function main() {
   // await hre.run('compile');
 
   // We get the contract to deploy
-  const RPS = await ethers.getContractFactory("RockPaperScissors");
-  console.log("Deploying RPS...");
-  const rps = await upgrades.deployProxy(RPS);
-  await rps.deployed();
-  console.log("RPS deployed to:", rps.address);
+  const RPSV2 = await ethers.getContractFactory("RockPaperScissorV2");
+  console.log("Upgrading RPS...");
+  const rpsv2 = await upgrades.upgradeProxy('0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0', RPSV2);
+  await rpsv2.deployed();
+  console.log("RPS upgraded to:", rpsv2.address);
 }
 
 // We recommend this pattern to be able to use async/await everywhere
